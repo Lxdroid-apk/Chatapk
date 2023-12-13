@@ -20,7 +20,7 @@ import {
         </Text>
         <TextInput
           placeholder="Enter Email"
-          style={[styles.txtinput, {marginTop: 20}]}
+          style={[styles.txtinput, {marginTop: 100}]}
           value={email}
           onChangeText={txt => setEmail(txt)}
         />
