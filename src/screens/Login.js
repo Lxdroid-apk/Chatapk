@@ -36,7 +36,7 @@ import {
         </TouchableOpacity>
         <Text style={styles.orLogin}
         onPress={()=>{
-            navigation.navigate('Signup');
+            navigation.goBack();
         }}
         >Or SignUp</Text>
       </View>
