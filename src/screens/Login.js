@@ -30,7 +30,6 @@ import {
           value={password}
           onChangeText={txt => setPassword(txt)}
         />
-       
         <TouchableOpacity style={styles.btn}>
           <Text style={styles.btntxt}>Login</Text>
         </TouchableOpacity>
