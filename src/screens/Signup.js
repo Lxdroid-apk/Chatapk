@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import { useNavigation } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+  import uuid from 'react-native-uuid';
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -15,6 +17,21 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigation=useNavigation();
+  const registerUser=()=>{
+    const userID=uuid.v4();
+    firestore().collection("users").doc(userID).set({
+      name:name,
+      email:email,
+      mobile:mobile,
+      password:password,
+      userID:userID,
+    }).then(res=>{
+      console.log('user created');
+    }).catch(error=>{
+      console.log(error);
+    });
+
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.txt}>Signup</Text>
@@ -52,7 +69,11 @@ const Signup = () => {
         value={confirmPassword}
         onChangeText={txt => setConfirmPassword(txt)}
       />
-      <TouchableOpacity style={styles.btn}>
+      <TouchableOpacity 
+      style={styles.btn}
+      onPress={() => {
+          registerUser();
+        }}>
         <Text style={styles.btntxt}>SignUp</Text>
       </TouchableOpacity>
       <Text style={styles.orLogin}
