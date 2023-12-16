@@ -4,6 +4,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -27,11 +28,35 @@ const Signup = () => {
       userID:userID,
     }).then(res=>{
       console.log('user created');
+      navigation.navigate('Login');
     }).catch(error=>{
       console.log(error);
     });
 
   };
+  const validate=()=>{
+    let isValid=true;
+    if (name == ''){
+      isValid=false;
+    };
+    if(email ==''){
+      isValid=false;
+    };
+    if(mobile == ''){
+      isValid=false;
+    };
+    if(password == ''){
+      isValid=false;
+    };
+    if(confirmPassword == ''){
+      isValid=false;
+    };
+    if(confirmPassword !== password){
+      isValid=false;
+    };
+    return isValid;
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.txt}>Signup</Text>
@@ -54,6 +79,7 @@ const Signup = () => {
         placeholder="Enter Mobile"
         style={[styles.txtinput, {marginTop: 20}]}
         keyboardType="number-pad"
+        maxLength={10}
         value={mobile}
         onChangeText={txt => setMobile(txt)}
       />
@@ -72,7 +98,12 @@ const Signup = () => {
       <TouchableOpacity 
       style={styles.btn}
       onPress={() => {
+        if (validate()){
           registerUser();
+        }else{
+          Alert.alert("Please Enter Correct Data");
+        }
+          
         }}>
         <Text style={styles.btntxt}>SignUp</Text>
       </TouchableOpacity>
@@ -84,6 +115,7 @@ const Signup = () => {
     </View>
   );
 };
+
 
 export default Signup;
 

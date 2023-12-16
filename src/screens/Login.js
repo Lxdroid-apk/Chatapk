@@ -4,14 +4,34 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
+
+  const loginuser = () => {
+    firestore()
+      .collection('users')
+      .where('email', '==', email)
+      .get()
+      .then(res => {
+        if (res.docs !== []) {
+          console.log(JSON.stringify(res.docs[0].data()));
+        }else{
+          Alert.alert("User Not Found");
+        }
+      })
+      .catch(error => {
+        console.log(jsonString);
+        Alert.alert("User Not Found");
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -33,7 +53,9 @@ const Login = () => {
       />
       <TouchableOpacity
         style={styles.btn}
-        >
+        onPress={() => {
+          loginuser();
+        }}>
         <Text style={styles.btntxt}>Login</Text>
       </TouchableOpacity>
       <Text
